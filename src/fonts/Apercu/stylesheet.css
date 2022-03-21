@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Apercu Pro';
+    src: url('./apercu-regular.woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Canela';
+    src: url('../canela-thin.woff2');
+    font-weight: normal;
+    font-style: normal;
+}
