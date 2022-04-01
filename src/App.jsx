@@ -34,6 +34,10 @@ const App = () => {
 
 		setTimeout(() => {
 			window.addEventListener('mousemove', mouseFunc)
+
+			if (window.innerWidth < 1000) {
+				window.addEventListener('touchmove', mouseFunc)
+			}
 		}, 1000)
 		
 		return () => window.removeEventListener('mousemove', mouseFunc)
