@@ -55,6 +55,12 @@ body {
 	z-index: 1;
 }
 
+.hover img {
+	filter: grayscale(50%);
+	transform: translate(-50%, -50%) scale(1.3);
+	z-index: 1;
+}
+
 .bg {
 	position: fixed;
 	width: 100vw;
@@ -169,4 +175,28 @@ header {
 	font-weight: 400;
 	width: 300px;
 	z-index: 3;
+}
+
+.data {
+	top: 20%;
+	transition: all 1s ease;
+	transition-delay: .4s;
+}
+
+.data-hide {
+	opacity: 0;
+}
+
+.back {
+	width: 60px;
+	height: 60px;
+	display: block;
+	border-radius: 50%;
+	border: 2px solid rgb(110, 197, 255);
+	margin-bottom: 40px;
+	transition: all .3s ease;
+}
+
+.back:hover {
+	background: rgb(110, 197, 255);
 }

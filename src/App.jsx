@@ -1,18 +1,24 @@
 import './App.css'
 import { useEffect, useRef, useState } from 'react'
 import Photo from './components/Photo'
+import { modelData } from './data/photos'
 
 const App = () => {
 	const [allowDrag, setAllowDrag] = useState(true)
 	const [shownImage, setShownImage] = useState(null)
+	const [allowClick, setAllowClick] = useState(true)
+	const [text, setText] = useState({
+		title: "Jivi Emir",
+		name: ""
+	})
 	let App = useRef()
 
 	let xCenter = window.innerWidth / 2,
 		yCenter = window.innerHeight / 2
 
 	const openPicFunc = (id) => {
-		setAllowDrag(false)
-		setShownImage(id)
+		setAllowDrag(!allowDrag)
+		setShownImage(shownImage ? null : id)
 	}
 
 	useEffect(() => {
@@ -35,9 +41,14 @@ const App = () => {
 
 	return (
 		<>
-			<h1 className="central-word">Jivi Emir</h1>
+			<h1 className="central-word">{shownImage ? modelData[shownImage - 1].name : text.title}</h1>
 			<h2 className="secondary-text">
 				Photographer Jimi Emir based in Los Angeles
+			</h2>
+			<h2 className={`secondary-text data ${shownImage ? undefined : 'data-hide'}`}>
+				{/* <span className="back"></span> */}
+				Location: {text.location}<br/>
+				Model: {text.name}
 			</h2>
 			<header>
 				<div className="burger">
@@ -60,36 +71,18 @@ const App = () => {
 				<span></span>
 			</div>
 			<div className="App" ref={App}>
-				<Photo
-					id={1}
-					styles={{
-						left: '30%',
-						top: '30%',
-					}}
-					source="https://img1.wsimg.com/isteam/ip/d1b3d056-3f07-45e8-9296-3900c23a79b5/DSC09790.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:1250,cg:true"
-					openPicFunc={openPicFunc}
-					shownImage={shownImage}
-				/>
-				<Photo
-					id={2}
-					styles={{
-						left: '50%',
-						top: '50%',
-					}}
-					source="https://img1.wsimg.com/isteam/ip/d1b3d056-3f07-45e8-9296-3900c23a79b5/DSC05899-Recovered.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:1250,cg:true"
-					openPicFunc={openPicFunc}
-					shownImage={shownImage}
-				/>
-				<Photo
-					id={3}
-					styles={{
-						left: '57%',
-						top: '5%',
-					}}
-					source="https://img1.wsimg.com/isteam/ip/d1b3d056-3f07-45e8-9296-3900c23a79b5/DSC05735.jpg/:/rs=w:370,cg:true,m"
-					openPicFunc={openPicFunc}
-					shownImage={shownImage}
-				/>
+				{
+					modelData.map((i, index) => <Photo
+						id={index + 1}
+						openPicFunc={openPicFunc}
+						shownImage={shownImage}
+						text={text}
+						setText={setText}
+						setAllowClick={setAllowClick}
+						allowClick={allowClick}
+						data={i}
+					/>)
+				}
 			</div>
 		</>
 	)

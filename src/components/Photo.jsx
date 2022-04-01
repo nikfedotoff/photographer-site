@@ -1,36 +1,77 @@
 import React, { useRef, useState } from 'react'
+import { modelData } from '../data/photos'
 
-const Photo = ({ styles, source, openPicFunc, id, shownImage }) => {
-    const el = useRef()
-    const [allowClick, setAllowClick] = useState(true)
+const Photo = ({
+    data,
+	openPicFunc,
+	id,
+	shownImage,
+	text,
+	setText,
+	allowClick,
+	setAllowClick,
+}) => {
+	const el = useRef()
 
-    let xCenter = window.innerWidth / 2,
+	let xCenter = window.innerWidth / 2,
 		yCenter = window.innerHeight / 2,
-        hidden = shownImage != null && shownImage != id
+		hidden = shownImage != null && shownImage != id
 
-    const openPic = (e) => {
-        openPicFunc(id)
-        setAllowClick(false)
+	const clickHandler = (e) => {
+		if (hidden) {
+			return
+		}
 
-        setTimeout(() => {
-            setAllowClick(true)
+		if (allowClick) {
+			openPicFunc(id)
+			setAllowClick(false)
+			setText({
+				...text,
+				name: data.name,
+				location: data.location,
+			})
 
-            let coords = el.current.getBoundingClientRect()
-            el.current.style.transform = `translate(calc(-50% + ${xCenter - coords.x}px), calc(-50% + ${yCenter - coords.y}px))`
-        }, 300)
+			setTimeout(() => {
+				let coords = el.current.getBoundingClientRect()
+				el.current.style.transform = `translate(calc(-50% + ${
+					xCenter - coords.x
+				}px), calc(-50% + ${yCenter - coords.y}px))`
+
+				el.current.classList.toggle('hover')
+			}, 300)
+
+			setTimeout(() => {
+				setAllowClick(true)
+			}, 1100)
+		}
 	}
 
-	return <div
-        className="img"
-        style={hidden ? {...styles, opacity: 0, transform: 'scale(.5)'} : styles}
-        onClick={allowClick && openPic}
-        ref={el}
-    >
-        <img
-            src={source}
-            alt=""
-        />
-    </div>
+	return (
+		<div
+			className="img"
+			style={
+				hidden
+					? { ...data.styles, opacity: 0, transform: 'scale(.5)' }
+					: data.styles
+			}
+			onClick={clickHandler}
+			ref={el}
+			onMouseEnter={() =>
+				setText({
+					...text,
+					title: data.name,
+				})
+			}
+			onMouseLeave={() =>
+				setText({
+					...text,
+					title: 'Jivi Emir',
+				})
+			}
+		>
+			<img src={data.img} alt="" />
+		</div>
+	)
 }
 
 export default Photo
