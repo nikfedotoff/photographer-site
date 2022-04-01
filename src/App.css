@@ -200,3 +200,13 @@ header {
 .back:hover {
 	background: rgb(110, 197, 255);
 }
+
+@media screen and (max-width: 1000px) {
+	.img {
+		width: 100px;
+		height: 150px;
+		position: absolute;
+		overflow: hidden;
+		transition: transform .6s cubic-bezier(.785,.135,.15,.86) .1s, filter .3s ease, opacity .6s ease;
+	}
+}
